@@ -17,7 +17,9 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "express-mongo-sanitize": "^2.2.0",
-    "mongoose": "^8.9.3"
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.9.3",
+    "nodemailer": "^6.9.16"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
