@@ -17,7 +17,7 @@ interface IArtwork {
   maker: Types.ObjectId;
 }
 
-const ArtworkSchema: Schema<IArtwork> = new Schema({
+const artworkSchema: Schema<IArtwork> = new Schema({
   title: { type: String, required: true, unique: true },
   series: { type: String },
   year: { type: Number, required: true },
@@ -33,6 +33,6 @@ const ArtworkSchema: Schema<IArtwork> = new Schema({
   maker: { type: Schema.Types.ObjectId, ref: "Artist", required: true },
 });
 
-const Artwork = model<IArtwork>("Artwork", ArtworkSchema);
+const Artwork = model<IArtwork>("Artwork", artworkSchema);
 
 export default Artwork;

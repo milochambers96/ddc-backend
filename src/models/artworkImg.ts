@@ -6,12 +6,12 @@ interface IArtworkImg {
   imageOf: Types.ObjectId;
 }
 
-const ArtworkImgSchema: Schema<IArtworkImg> = new Schema({
+const artworkImgSchema: Schema<IArtworkImg> = new Schema({
   url: { type: String, required: true },
   altText: { type: String, required: true },
   imageOf: { type: Schema.Types.ObjectId, ref: "Artwork", required: true },
 });
 
-const ArtworkImg = model<IArtworkImg>("ArtworkImg", ArtworkImgSchema);
+const ArtworkImg = model<IArtworkImg>("ArtworkImg", artworkImgSchema);
 
 export default ArtworkImg;
