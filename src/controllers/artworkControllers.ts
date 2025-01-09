@@ -7,7 +7,7 @@ export const getAllArtworks = async (
   res: Response
 ): Promise<any> => {
   try {
-    const artworks = await Artwork.find();
+    const artworks = await Artwork.find().populate("maker", "name");
 
     if (!artworks || artworks.length === 0) {
       console.log("No artworks found in DB.");
@@ -51,7 +51,10 @@ export const getAllArtworks = async (
 
 export const getArtworksByType = async (res: Response, req: Request) => {
   const requestedType = req.params.artworkType;
-  const artworks = await Artwork.find({ artworkType: requestedType });
+  const artworks = await Artwork.find({ artworkType: requestedType }).populate(
+    "maker",
+    "name"
+  );
   try {
     if (!artworks || artworks.length === 0) {
       return res.status(404).json({
@@ -92,10 +95,13 @@ export const getArtworksByType = async (res: Response, req: Request) => {
   }
 };
 
-export const getASpecificArtwork = async (req: Request, res: Response) => {
+export const getASpecificArtwork = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
   const artworkId = req.params.artworkId;
   try {
-    const artwork = await Artwork.findById(artworkId);
+    const artwork = await Artwork.findById(artworkId).populate("maker", "name");
 
     if (!artwork) {
       return res.status(404).json({
@@ -181,7 +187,10 @@ export const addAnArtwork = async (
   }
 };
 
-export const removeAnArtwork = async (req: Request, res: Response) => {
+export const removeAnArtwork = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
   const reqArtworkToRemove = req.params.artworkId;
   try {
     const artworkToRemove = await Artwork.findByIdAndDelete(reqArtworkToRemove);
@@ -224,7 +233,10 @@ export const removeAnArtwork = async (req: Request, res: Response) => {
   }
 };
 
-export const UpdateArtworkDetails = async (req: Request, res: Response) => {
+export const updateArtworkDetails = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
   const artworkId = req.params.artworkId;
   const newInfo = req.body;
   try {
@@ -285,7 +297,7 @@ export const UpdateArtworkDetails = async (req: Request, res: Response) => {
 
     return res.status(500).json({
       success: false,
-      message: "Failed to add artwork. Please try again later.",
+      message: "Failed to update artwork. Please try again later.",
       error: process.env.NODE_ENV === "development" ? errorMessage : undefined,
     });
   }

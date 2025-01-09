@@ -13,7 +13,7 @@ export const getArtistsIdRef = async (
   if (!artist) {
     return res.status(404).json({
       success: false,
-      message: `Unable to upload artwork, as ${artistName} is not an existing creator.`,
+      message: `Unable to upload artwork as ${artistName} is not an existing creator.`,
     });
   }
   const artistId = artist?._id;
