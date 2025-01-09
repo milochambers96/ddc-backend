@@ -5,6 +5,11 @@ import {
   addAnArtwork,
 } from "../controllers/artworkControllers";
 
+import { getArtistsIdRef } from "../middleware/getArtistsIdRef";
+
 export const router = express.Router();
 
-router.route("/artworks").get(getAllArtworks).post(addAnArtwork);
+router
+  .route("/artworks")
+  .get(getAllArtworks)
+  .post(getArtistsIdRef, addAnArtwork);
