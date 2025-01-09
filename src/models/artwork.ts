@@ -1,9 +1,4 @@
-import {
-  MiscellaneousExpressionOperatorReturningNumber,
-  model,
-  Schema,
-  Types,
-} from "mongoose";
+import { model, Schema, Types } from "mongoose";
 
 interface IArtwork {
   title: string;
@@ -15,6 +10,7 @@ interface IArtwork {
   height: number;
   depth?: number;
   maker: Types.ObjectId;
+  imgs: Types.ObjectId[];
 }
 
 const artworkSchema: Schema<IArtwork> = new Schema({
@@ -31,6 +27,7 @@ const artworkSchema: Schema<IArtwork> = new Schema({
   height: { type: Number, required: true },
   depth: { type: Number },
   maker: { type: Schema.Types.ObjectId, ref: "Artist", required: true },
+  //   imgs: [{ type: Schema.Types.ObjectId, ref: "Image", required: true }],
 });
 
 const Artwork = model<IArtwork>("Artwork", artworkSchema);
