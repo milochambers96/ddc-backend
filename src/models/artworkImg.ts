@@ -7,8 +7,7 @@ interface IArtworkImg {
 }
 
 const artworkImgSchema: Schema<IArtworkImg> = new Schema({
-  url: { type: String, required: true },
-  altText: { type: String, required: true },
+  url: { type: String, required: true, unique: true },
   imageOf: { type: Schema.Types.ObjectId, ref: "Artwork", required: true },
 });
 

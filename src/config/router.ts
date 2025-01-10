@@ -21,4 +21,6 @@ router
   .route("/artworks/:artworkId")
   .get(getASpecificArtwork)
   .delete(removeAnArtwork)
-  .put(updateArtworkDetails);
+  .put(getArtistsIdRef, updateArtworkDetails);
+
+router.route("/artworks/:artworkType");

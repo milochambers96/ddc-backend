@@ -27,7 +27,7 @@ const artworkSchema: Schema<IArtwork> = new Schema({
   height: { type: Number, required: true },
   depth: { type: Number },
   maker: { type: Schema.Types.ObjectId, ref: "Artist", required: true },
-  //   imgs: [{ type: Schema.Types.ObjectId, ref: "Image", required: true }],
+  imgs: [{ type: Schema.Types.ObjectId, ref: "Image" }],
 });
 
 const Artwork = model<IArtwork>("Artwork", artworkSchema);
