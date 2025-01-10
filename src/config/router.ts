@@ -8,6 +8,12 @@ import {
   updateArtworkDetails,
 } from "../controllers/artworkControllers";
 
+import {
+  addImgsToArtwork,
+  deleteAllImgs,
+  deleteAImg,
+} from "../controllers/artworkImgControllers";
+
 import { getArtistsIdRef } from "../middleware/getArtistsIdRef";
 
 export const router = express.Router();
@@ -24,3 +30,10 @@ router
   .put(getArtistsIdRef, updateArtworkDetails);
 
 router.route("/artworks/:artworkType");
+
+router
+  .route("artworks/:artworkId/images")
+  .post(addImgsToArtwork)
+  .delete(deleteAllImgs);
+
+router.route("/images/:imgId").delete(deleteAImg);
