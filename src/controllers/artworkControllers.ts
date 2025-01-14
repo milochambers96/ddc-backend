@@ -7,13 +7,15 @@ export const getAllArtworks = async (
   res: Response
 ): Promise<any> => {
   try {
-    const artworks = await Artwork.find().populate("maker", "name");
+    const artworks = await Artwork.find()
+      .populate("maker", "name")
+      .populate("imgs", "url");
 
     if (!artworks || artworks.length === 0) {
       console.log("No artworks found in DB.");
       return res.status(404).json({
         success: false,
-        message: "No artworks were found.",
+        message: "No artworks were found. Please review path.",
       });
     }
 
@@ -51,10 +53,9 @@ export const getAllArtworks = async (
 
 export const getArtworksByType = async (res: Response, req: Request) => {
   const requestedType = req.params.artworkType;
-  const artworks = await Artwork.find({ artworkType: requestedType }).populate(
-    "maker",
-    "name"
-  );
+  const artworks = await Artwork.find({ artworkType: requestedType })
+    .populate("maker", "name")
+    .populate("imgs", "url");
   try {
     if (!artworks || artworks.length === 0) {
       return res.status(404).json({

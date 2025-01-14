@@ -56,11 +56,11 @@ const talkSchema: Schema<ITalk> = new Schema({
 
 //  ? Artist interface and parent schema
 
-interface IArtist {
+export interface IArtist {
   name: string;
   dob: number;
   bio: string;
-  exhibtions?: IExhibition[];
+  exhibitions?: IExhibition[];
   residencies?: IResidency[];
   talks?: ITalk[];
 }
@@ -68,7 +68,7 @@ interface IArtist {
 const artistSchema: Schema<IArtist> = new Schema({
   name: { type: String, required: true, unique: true },
   bio: { type: String, required: true },
-  exhibtions: [exhibitionSchema],
+  exhibitions: [exhibitionSchema],
   residencies: [residencySchema],
   talks: [talkSchema],
 });
