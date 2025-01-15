@@ -170,6 +170,12 @@ export const addToArtistsCV = async (
       });
     }
 
+    console.log({
+      level: "info",
+      message: `CV item successfully added to ${cvSubsection}.`,
+      timestamp: new Date().toISOString(),
+    });
+
     return res.status(200).json({
       success: true,
       message: `${cvSubsection} updated successfully.`,
@@ -278,6 +284,79 @@ export const updateCvItemDetails = async (
     return res.status(500).json({
       success: false,
       message: "Unable to update CV item. Please try again later.",
+      error: process.env.NODE_ENV === "development" ? errorMessage : undefined,
+    });
+  }
+};
+
+// Control to remove a CV Item
+
+export const deleteACvItem = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
+  const artistId = req.params.artistId;
+  const cvSubsection = req.params.cvSubsection;
+  const cvItemId = req.params.cvItemId;
+
+  try {
+    if (!artistId || !cvSubsection || !cvItemId) {
+      return res.status(400).json({
+        success: false,
+        message: "Missing required information in the request.",
+      });
+    }
+
+    if (!validateCVSubsection(cvSubsection)) {
+      res.status(400).json({
+        success: false,
+        message:
+          "Please review submitted information. Only an exhibtion, residency, or talk can be removed from an artists profile.",
+      });
+    }
+
+    const removeFromArtistCV = await Artist.findByIdAndUpdate(
+      artistId,
+      {
+        $pull: {
+          [cvSubsection]: { _id: cvItemId },
+        },
+      },
+      { new: true }
+    );
+
+    if (!removeFromArtistCV) {
+      return res.status(400).json({
+        success: false,
+        message: `Artist not found or unable to remove item from the artist's listed ${cvSubsection}.`,
+      });
+    }
+
+    console.log({
+      level: "info",
+      message: `CV item successfully removed from ${removeFromArtistCV.name}'s ${cvSubsection}.`,
+      timestamp: new Date().toISOString(),
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: `CV item successfully removed from ${removeFromArtistCV.name}'s ${cvSubsection}.`,
+    });
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown Error Occurred";
+
+    console.error({
+      level: "error",
+      message: `Failed to remove CV item from ${cvSubsection}.`,
+      error: errorMessage,
+      timestamp: new Date().toISOString(),
+      stack: error instanceof Error ? error.stack : undefined,
+    });
+
+    return res.status(400).json({
+      success: false,
+      message: "Unable to remove CV item. Please try again later.",
       error: process.env.NODE_ENV === "development" ? errorMessage : undefined,
     });
   }
