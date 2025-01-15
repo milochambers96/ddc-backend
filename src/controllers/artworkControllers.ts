@@ -124,7 +124,7 @@ export const getASpecificArtwork = async (
 
     console.error({
       level: "error",
-      message: "Failed to retrieve artworks",
+      message: "Failed to retrieve artwork.",
       error: errorMessage,
       timestamp: new Date().toISOString(),
       stack: error instanceof Error ? error.stack : undefined,
@@ -205,7 +205,7 @@ export const removeAnArtwork = async (
 
     console.log({
       level: "info",
-      message: `${artworkToRemove.title} removed from db.`,
+      message: `${artworkToRemove.title} removed from DB.`,
       timestamp: new Date().toISOString,
     });
 
@@ -220,15 +220,15 @@ export const removeAnArtwork = async (
 
     console.error({
       level: "error",
-      message: "Unable to remove artwork from DB",
+      message: "Unable to remove artwork from DB.",
       error: errorMessage,
       timestamp: new Date().toISOString(),
       stack: error instanceof Error ? error.stack : undefined,
     });
 
     return res.status(500).json({
-      success: "false",
-      message: "Unable to remove requested artwork from the site",
+      success: false,
+      message: "Unable to remove requested artwork from site.",
       error: process.env.NODE_ENV === "development" ? errorMessage : undefined,
     });
   }
@@ -280,14 +280,14 @@ export const updateArtworkDetails = async (
 
     console.error({
       level: "error",
-      message: "Failed to update artwork",
+      message: "Failed to update artwork.",
       error: errorMessage,
       timestamp: new Date().toISOString(),
       stack: error instanceof Error ? error.stack : undefined,
     });
 
     if (error instanceof Error && error.name === "ValidationError") {
-      return res.status(404).json({
+      return res.status(400).json({
         success: false,
         message:
           "Unable to update requested artwork due to missing information. Please review submitted fields.",

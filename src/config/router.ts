@@ -23,6 +23,13 @@ import {
 } from "../controllers/artworkImgControllers";
 
 import { getArtistsIdRef } from "../middleware/getArtistsIdRef";
+import {
+  addAnInstall,
+  getAllInstalls,
+  getSpecificInstall,
+  removeAnInstall,
+  updateAnInstall,
+} from "../controllers/installationControllers";
 
 export const router = express.Router();
 
@@ -51,7 +58,14 @@ router.route("/artworks/:artworkType");
 
 // Routes to perform CRUD operations on images of artworks
 router
-  .route("artworks/:artworkId/images")
+  .route("/artworks/:artworkId/images")
   .post(addImgsToArtwork)
   .delete(deleteAllImgs);
 router.route("/images/:imgId").delete(deleteAImg);
+
+router.route("/installations").get(getAllInstalls).post(addAnInstall);
+router
+  .route("/installations/:installId")
+  .get(getSpecificInstall)
+  .delete(removeAnInstall)
+  .put(updateAnInstall);
